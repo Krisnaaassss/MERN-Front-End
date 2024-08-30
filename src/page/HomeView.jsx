@@ -1,10 +1,13 @@
+import axios from "axios";
 
-const HomeView = () => {
-  return (
-    <div>
-      Home
-    </div>
-  )
+try {
+  const data = await axios.get("/api/v1/product");
+  console.log(data);
+} catch (error) {
+  console.log(error);
 }
+const HomeView = () => {
+  return <div>Home</div>;
+};
 
-export default HomeView
+export default HomeView;
