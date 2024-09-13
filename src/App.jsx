@@ -7,7 +7,9 @@ import OrderView from "./page/OrderView";
 import LoginView from "./page/auth/LoginView";
 import RegisterView from "./page/auth/RegisterView";
 import PublicLayout from "./layouts/PublicLayout";
-
+import DetailProductView from "./page/DetailProductView";
+import { loader as HomeLoader } from "./page/HomeView";
+import { loader as ProductLoader } from "./page/ProductView";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomeView />,
+        loader: HomeLoader,
       },
       {
         path: "/about",
@@ -28,6 +31,11 @@ const router = createBrowserRouter([
       {
         path: "/product",
         element: <ProductView />,
+        loader: ProductLoader,
+      },
+      {
+        path: "/product/:id",
+        element: <DetailProductView />,
       },
       {
         path: "/order",
