@@ -8,7 +8,7 @@ const PublicLayout = () => {
     <>
       <Header />
       <Nav />
-      <main className="mx-auto max-w-6xl px-8 py-20 min-h-[80vh]">
+      <main className="mx-auto max-w-6xl px-8 py-4  min-h-[120vh]">
         <Outlet />
       </main>
       <Footer />

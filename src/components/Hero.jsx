@@ -22,7 +22,7 @@ const Hero = () => {
         <div className="hidden lg:carousel carousel-center bg-neutral rounded-box space-x-4 p-4 ">
           {products.map((product) => (
             <div className="carousel-item" key={product._id}>
-              <img src={product.image} className="rounded-box" />
+              <img src={product.image} className="rounded-box w-[270px]" />
             </div>
           ))}
         </div>

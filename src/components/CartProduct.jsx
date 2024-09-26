@@ -13,8 +13,12 @@ const CartProduct = ({ product }) => {
   return (
     <>
       <div className="card bg-base-300 shadow-xl">
-        <figure>
-          <img src={product.image} alt="Shoes" />
+        <figure className="h-[220px] ">
+          <img
+            src={product.image}
+            alt="Shoes"
+            className="object-cover w-full h-full"
+          />
         </figure>
         <div className="card-body">
           <h2 className="card-title text-primary">{product.name}</h2>
