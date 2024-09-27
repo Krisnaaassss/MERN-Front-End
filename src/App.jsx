@@ -10,6 +10,7 @@ import PublicLayout from "./layouts/PublicLayout";
 import DetailProductView from "./page/DetailProductView";
 import { loader as HomeLoader } from "./page/HomeView";
 import { loader as ProductLoader } from "./page/ProductView";
+import { action as LoginAction } from "./page/auth/LoginView";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,15 +42,16 @@ const router = createBrowserRouter([
         path: "/order",
         element: <OrderView />,
       },
-      {
-        path: "/login",
-        element: <LoginView />,
-      },
-      {
-        path: "/register",
-        element: <RegisterView />,
-      },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginView />,
+    action: LoginAction,
+  },
+  {
+    path: "/register",
+    element: <RegisterView />,
   },
 ]);
 
