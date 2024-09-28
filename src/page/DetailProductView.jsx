@@ -4,11 +4,25 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import costumApi from "../api";
 import { FaPlus } from "react-icons/fa";
+import { generateSelectOptions, priceFormat } from "../utils";
 
 const DetailProductView = () => {
   let { id } = useParams();
 
   const [product, setProduct] = useState("");
+  const [amount, setAmount] = useState(1);
+
+  // fungsi untuk menghandle perubahan jumlah produk yang ingin ditambahkan ke keranjang
+  const handleAmount = (e) => {
+    // mengupdate state amount dengan nilai yang diinputkan
+    setAmount(parseInt(e.target.value));
+  };
+
+  // fungsi untuk menghandle penambahan produk ke keranjang
+  const handleCart = () => {
+    // untuk sementara, hanya menampilkan jumlah produk yang ingin ditambahkan
+    console.log(amount);
+  };
 
   // fungsi untuk mengambil data product berdasarkan id yang dikirim melalui parameter
   // dari url. fungsi ini akan dipanggil saat komponen di-mount
@@ -27,18 +41,9 @@ const DetailProductView = () => {
     productData();
   }, []);
 
-  const priceFormat = (price) => {
-    const rupiahFormat = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(price);
-
-    return rupiahFormat;
-  };
-
   return (
     <section>
-      <div className="card lg:card-side bg-base-300 shadow-xl">
+      <div className="card lg:card-side bg-base-300 shadow-xl mt-12">
         <figure>
           <img
             src={product.image}
@@ -55,7 +60,19 @@ const DetailProductView = () => {
           <div className="badge badge-primary">{product.category}</div>
           <p className="mt-3">{product.description}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary btn-lg">
+            <label className="form-control">
+              <label className="label">
+                <span className="capitalize label-text mx-4">Amount</span>
+                <select
+                  name="amount"
+                  className="select select-bordered"
+                  onChange={handleAmount}
+                >
+                  {generateSelectOptions(product.stock)}
+                </select>
+              </label>
+            </label>
+            <button className="btn btn-primary btn-lg" onClick={handleCart}>
               {" "}
               <FaPlus />
               Keranjang
