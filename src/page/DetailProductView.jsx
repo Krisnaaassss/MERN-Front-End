@@ -5,12 +5,26 @@ import { useState, useEffect } from "react";
 import costumApi from "../api";
 import { FaPlus } from "react-icons/fa";
 import { generateSelectOptions, priceFormat } from "../utils";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/cartSlice";
 
 const DetailProductView = () => {
   let { id } = useParams();
 
   const [product, setProduct] = useState("");
   const [amount, setAmount] = useState(1);
+
+  //store
+  const dispatch = useDispatch();
+
+  const productCart = {
+    cartId: product._id + product.name,
+    productId: product._id,
+    image: product.image,
+    name: product.name,
+    price: product.price,
+    amount: amount,
+  };
 
   // fungsi untuk menghandle perubahan jumlah produk yang ingin ditambahkan ke keranjang
   const handleAmount = (e) => {
@@ -20,12 +34,10 @@ const DetailProductView = () => {
 
   // fungsi untuk menghandle penambahan produk ke keranjang
   const handleCart = () => {
-    // untuk sementara, hanya menampilkan jumlah produk yang ingin ditambahkan
-    console.log(amount);
+    dispatch(addItem({ product: productCart }));
   };
 
-  // fungsi untuk mengambil data product berdasarkan id yang dikirim melalui parameter
-  // dari url. fungsi ini akan dipanggil saat komponen di-mount
+  // fungsi untuk mengambil data product berdasarkan id yang dikirim melalui parameter dari url. fungsi ini akan dipanggil saat komponen di-mount
   const productData = async () => {
     try {
       // melakukan request ke server untuk mengambil data product berdasarkan id

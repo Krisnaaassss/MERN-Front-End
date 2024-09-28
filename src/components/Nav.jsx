@@ -9,7 +9,12 @@ const Nav = () => {
   const user = useSelector((state) => state.userState.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // mengambil jumlah item di dalam keranjang dari state.cartState
+  const countInCart = useSelector((state) => state.cartState.numItemsCart);
   const handlingOut = async () => {
+    await costumApi.get("/auth/logout");
+    dispatch(logoutUser());
+    navigate("/");
     await costumApi.get("/auth/logout");
     dispatch(logoutUser());
     navigate("/");
@@ -49,7 +54,7 @@ const Nav = () => {
             <div className="indicator">
               <BsCart3 />
               <span className="badge badge-primary badge-sm indicator-item">
-                8
+                {}
               </span>
             </div>
           </NavLink>
