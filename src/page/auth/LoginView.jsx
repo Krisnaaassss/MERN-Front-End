@@ -1,20 +1,26 @@
-/* eslint-disable react-refresh/only-export-components */
 import FormAuth from "../../components/FormAuth";
 import costumApi from "../../api";
-
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  try {
-    const response = await costumApi.post("/auth/login", data);
-    console.log(response);
-    return null;
-  } catch (error) {
-    const errorMassage = error.response.data.message;
-    console.log(errorMassage);
-    return null;
-  }
-};
+import { toast } from "react-toastify";
+import { redirect } from "react-router-dom";
+import { loginUser } from "../../features/userSlice";
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    try {
+      // kirim data ke server untuk proses login
+      const response = await costumApi.post("/auth/login", data);
+      // jika berhasil, simpan data user di store redux
+      store.dispatch(loginUser(response.data));
+      toast.success("Login Berhasil");
+      return redirect("/");
+    } catch (error) {
+      const errorMassage = error.response.data.message;
+      toast.error(errorMassage);
+      return null;
+    }
+  };
 
 const LoginView = () => {
   return (

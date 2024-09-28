@@ -1,8 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import NavList from "./NavList";
 import { BsCart3 } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
+import costumApi from "../api";
+import { logoutUser } from "../features/userSlice";
 const Nav = () => {
+  const user = useSelector((state) => state.userState.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handlingOut = async () => {
+    await costumApi.get("/auth/logout");
+    dispatch(logoutUser());
+    navigate("/");
+  };
   return (
     <nav className="bg-base-200 ">
       <div className="navbar mx-auto max-w-6xl px-8">
@@ -33,7 +44,7 @@ const Nav = () => {
             </ul>
           </div>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-x-5">
           <NavLink to="/cart" className="btn btn-ghost btn-circle btn-md">
             <div className="indicator">
               <BsCart3 />
@@ -42,6 +53,14 @@ const Nav = () => {
               </span>
             </div>
           </NavLink>
+          {user && (
+            <button
+              className="btn btn-error btn-outline btn-md"
+              onClick={handlingOut}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>

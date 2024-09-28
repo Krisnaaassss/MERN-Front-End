@@ -10,9 +10,17 @@ const DetailProductView = () => {
 
   const [product, setProduct] = useState("");
 
+  // fungsi untuk mengambil data product berdasarkan id yang dikirim melalui parameter
+  // dari url. fungsi ini akan dipanggil saat komponen di-mount
   const productData = async () => {
-    const { data } = await costumApi.get(`/product/${id}`);
-    setProduct(data.data);
+    try {
+      // melakukan request ke server untuk mengambil data product berdasarkan id
+      const { data } = await costumApi.get(`/product/${id}`);
+      // set state product dengan data yang diterima dari server
+      setProduct(data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
