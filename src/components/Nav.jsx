@@ -54,7 +54,7 @@ const Nav = () => {
             <div className="indicator">
               <BsCart3 />
               <span className="badge badge-primary badge-sm indicator-item">
-                {}
+                {countInCart}
               </span>
             </div>
           </NavLink>

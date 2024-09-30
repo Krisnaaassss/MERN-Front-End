@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import costumApi from "../api";
 import CartProduct from "../components/CartProduct";
 import { useLoaderData } from "react-router-dom";

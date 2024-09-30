@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import costumApi from "../api";
 import { useLoaderData } from "react-router-dom";
 import Filter from "../components/Filter";
@@ -32,7 +31,7 @@ const ProductView = () => {
           <h1 className="text-3xl font-bold text-center">Product Not Found</h1>
         ) : (
           products.map((product) => (
-            <CartProduct key={product.id} product={product} />
+            <CartProduct key={product._id} product={product} />
           ))
         )}
       </div>
