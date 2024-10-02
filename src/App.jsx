@@ -11,14 +11,17 @@ import DetailProductView from "./page/DetailProductView";
 import CheckoutView from "./page/CheckoutView";
 import { loader as HomeLoader } from "./page/HomeView";
 import { loader as ProductLoader } from "./page/ProductView";
+import { loader as CheckoutLoader } from "./page/CheckoutView";
 import { action as LoginAction } from "./page/auth/LoginView";
 import { action as RegisterAction } from "./page/auth/RegisterView";
 import { store } from "./store";
+import ErrorView from "./page/ErrorView";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <PublicLayout />,
+    errorElement: <ErrorView />,
     children: [
       {
         index: true,
@@ -49,6 +52,7 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckoutView />,
+        loader: CheckoutLoader(store),
       },
     ],
   },

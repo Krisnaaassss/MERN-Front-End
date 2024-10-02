@@ -4,14 +4,28 @@ import { toast } from "react-toastify";
 import CartTotal from "../components/CartTotal";
 import FormInput from "../components/Form/FormInput";
 import customApi from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import { clearCartItem } from "../features/cartSlice";
+
+/**
+ * Fungsi loader untuk memeriksa apakah user sudah login atau belum
+ * Jika belum, maka akan redirect ke halaman login dan menampilkan toast warning
+ */
+export const loader = (storage) => () => {
+  const user = storage.getState().userState.user;
+  if (!user) {
+    toast.warn("Silahkan login terlebih dahulu");
+    return redirect("/login");
+  }
+  return null;
+};
 
 const CheckoutView = () => {
   const user = useSelector((state) => state.userState.user);
   const cart = useSelector((state) => state.cartState.cartItems);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     const insertSnapScript = () => {
       return new Promise((resolve, reject) => {
