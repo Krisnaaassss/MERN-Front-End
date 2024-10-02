@@ -60,6 +60,10 @@ const cartSlice = createSlice({
       // menampilkan toast yang berisi pesan
       toast.success("Produk diperbarui");
     },
+    clearCartItem: (state) => {
+      localStorage.setItem("cart", JSON.stringify(defaultValue));
+      return defaultValue;
+    },
     // fungsi untuk menghapus produk di dalam keranjang
     removeItem: (state, action) => {
       const { cartId } = action.payload;
@@ -80,5 +84,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, editItem, removeItem } = cartSlice.actions;
+export const { addItem, editItem, removeItem, clearCartItem } =
+  cartSlice.actions;
 export default cartSlice.reducer;

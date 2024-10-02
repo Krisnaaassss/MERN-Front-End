@@ -5,6 +5,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
 import costumApi from "../api";
 import { logoutUser } from "../features/userSlice";
+import { clearCartItem } from "../features/cartSlice";
 const Nav = () => {
   const user = useSelector((state) => state.userState.user);
   const dispatch = useDispatch();
@@ -12,12 +13,16 @@ const Nav = () => {
   // mengambil jumlah item di dalam keranjang dari state.cartState
   const countInCart = useSelector((state) => state.cartState.numItemsCart);
   const handlingOut = async () => {
-    await costumApi.get("/auth/logout");
-    dispatch(logoutUser());
-    navigate("/");
-    await costumApi.get("/auth/logout");
-    dispatch(logoutUser());
-    navigate("/");
+    try {
+      await costumApi.get("/auth/logout");
+      dispatch(logoutUser());
+      dispatch(clearCartItem());
+      navigate("/");
+    } catch (error) {
+      dispatch(logoutUser());
+      dispatch(clearCartItem());
+      navigate("/");
+    }
   };
   return (
     <nav className="bg-base-200 ">

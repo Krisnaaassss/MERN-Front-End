@@ -16,7 +16,7 @@ export const action =
       toast.success("Login Berhasil");
       return redirect("/");
     } catch (error) {
-      const errorMassage = error.response.data.message;
+      const errorMassage = error?.response?.data?.message;
       toast.error(errorMassage);
       return null;
     }

@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import CartTotal from "../components/CartTotal";
 import FormInput from "../components/Form/FormInput";
 import customApi from "../api";
 import { useNavigate } from "react-router-dom";
+import { clearCartItem } from "../features/cartSlice";
 
 const CheckoutView = () => {
   const user = useSelector((state) => state.userState.user);
   const cart = useSelector((state) => state.cartState.cartItems);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     const insertSnapScript = () => {
       return new Promise((resolve, reject) => {
@@ -79,6 +81,7 @@ const CheckoutView = () => {
     window.snap.pay(token, {
       onSuccess: (result) => {
         console.log(result);
+        dispatch(clearCartItem());
         toast.success("Payment Success");
         navigate("/");
       },
@@ -86,9 +89,9 @@ const CheckoutView = () => {
         console.log(result);
         toast.info("Payment Pending");
       },
-      onError: (result) => {
-        console.error(result);
-        toast.error("Payment Error");
+      onError: ({ message }) => {
+        console.error(message);
+        toast.error(message);
       },
       onClose: () => {
         console.log("Customer closed the popup without finishing the payment");
