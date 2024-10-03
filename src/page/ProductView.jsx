@@ -16,8 +16,7 @@ export const loader = async ({ request }) => {
   const pagination = data.pagination;
 
   return { products, params, pagination };
-};
-const ProductView = () => {
+};const ProductView = () => {
   const { products, pagination } = useLoaderData();
   // console.log(products);
   return (

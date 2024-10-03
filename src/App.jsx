@@ -12,6 +12,7 @@ import CheckoutView from "./page/CheckoutView";
 import { loader as HomeLoader } from "./page/HomeView";
 import { loader as ProductLoader } from "./page/ProductView";
 import { loader as CheckoutLoader } from "./page/CheckoutView";
+import { loader as OrderLoader } from "./page/OrderView";
 import { action as LoginAction } from "./page/auth/LoginView";
 import { action as RegisterAction } from "./page/auth/RegisterView";
 import { store } from "./store";
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <OrderView />,
+        loader: OrderLoader(store),
       },
       {
         path: "/checkout",
