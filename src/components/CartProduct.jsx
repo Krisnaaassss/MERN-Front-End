@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { priceFormat } from "../utils";
-const CartProduct = ({ product }) => {
+import { FaRegTrashCan, FaPen } from "react-icons/fa6";
+const CartProduct = ({ product, user }) => {
   return (
     <>
       <div className="card bg-base-300 shadow-xl">
@@ -13,6 +14,14 @@ const CartProduct = ({ product }) => {
           />
         </figure>
         <div className="card-body">
+          {user && user.role === "owner" && (
+            <div className="flex justify-end gap-x-3">
+              <FaRegTrashCan className="text-red-500 cursor-pointer" />
+              <Link to={`/product/${product._id}/edit`}>
+                <FaPen className="text-info cursor-pointer" />
+              </Link>
+            </div>
+          )}
           <h2 className="card-title text-primary">{product.name}</h2>
           <p className="font-bold text-accent">{priceFormat(product.price)}</p>
           <p>{product.description.substring(0, 50)}</p>
