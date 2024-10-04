@@ -9,8 +9,14 @@ export const loader = (storage) => async () => {
     toast.warn("Silahkan login terlebih dahulu");
     return redirect("/login");
   }
-  const { data } = await costumApi.get("/order/current/user");
-  const order = data.data;
+  let order;
+  if (user.role !== "owner") {
+    const { data } = await costumApi.get("/order/current/user");
+    order = data.data;
+  } else {
+    const response = await costumApi.get("/order");
+    order = response.data.orders;
+  }
   console.log(order);
   return { order };
 };

@@ -1,11 +1,28 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, redirect } from "react-router-dom";
 import costumApi from "../api";
 import FormSelect from "../components/Form/FormSelect";
 import FormInput from "../components/Form/FormInput";
 import FormTextArea from "../components/Form/FormTextArea";
 import Loading from "./../components/Loading";
 import { toast } from "react-toastify";
+
+export const loader = (store) => async () => {
+  const user = store.getState().userState.user;
+  if (!user) {
+    //kita harus return redirect ketika user belum login atau role tidak sesuai
+    //agar react router dapat meredirect ke halaman yang sesuai
+    //jika kita tidak return redirect, maka kode dibawah ini akan tetap dijalankan
+    //dan dapat menyebabkan error atau hasil yang tidak diinginkan
+    toast.warn("Silahkan login terlebih dahulu");
+    return redirect("/login");
+  }
+  if (user.role != "owner") {
+    toast.warn("Anda Tidak Memiliki Akses");
+    return redirect("/");
+  }
+  return null;
+};
 
 const EditProductView = () => {
   const [product, setProduct] = useState(null);
