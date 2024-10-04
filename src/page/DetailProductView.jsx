@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -58,11 +57,18 @@ const DetailProductView = () => {
     <section>
       <div className="card lg:card-side bg-base-300 shadow-xl mt-12">
         <figure>
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-[400px] h-[500px] object-cover"
-          />
+          <div className="relative">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-[400px] h-[500px] object-cover"
+            />
+            {product.stock < 1 && (
+              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 font-bold text-5xl w-full h-44 flex items-center justify-center ">
+                SOLD OUT
+              </span>
+            )}
+          </div>
         </figure>
         <div className="card-body">
           <h2 className="card-title">{product.name}</h2>
@@ -73,23 +79,27 @@ const DetailProductView = () => {
           <div className="badge badge-primary">{product.category}</div>
           <p className="mt-3">{product.description}</p>
           <div className="card-actions justify-end">
-            <label className="form-control">
-              <label className="label">
-                <span className="capitalize label-text mx-4">Amount</span>
-                <select
-                  name="amount"
-                  className="select select-bordered"
-                  onChange={handleAmount}
-                >
-                  {generateSelectOptions(product.stock)}
-                </select>
-              </label>
-            </label>
-            <button className="btn btn-primary btn-lg" onClick={handleCart}>
-              {" "}
-              <FaPlus />
-              Keranjang
-            </button>
+            {product.stock > 0 && (
+              <>
+                <label className="form-control">
+                  <label className="label">
+                    <span className="capitalize label-text mx-4">Amount</span>
+                    <select
+                      name="amount"
+                      className="select select-bordered"
+                      onChange={handleAmount}
+                    >
+                      {generateSelectOptions(product.stock)}
+                    </select>
+                  </label>
+                </label>
+                <button className="btn btn-primary btn-lg" onClick={handleCart}>
+                  {" "}
+                  <FaPlus />
+                  Keranjang
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
